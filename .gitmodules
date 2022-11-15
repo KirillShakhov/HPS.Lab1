@@ -1,0 +1,12 @@
+[submodule "Attachment"]
+	path = Attachment/
+	url = https://github.com/KirillShakhov/HPS.Lab1.git
+[submodule "Chat"]
+	path = Chat
+	url = https://github.com/KirillShakhov/HPS.Lab1.git
+[submodule "Core"]
+	path = Core
+	url = https://github.com/KirillShakhov/HPS.Lab1.git
+[submodule "Payment"]
+	path = Payment
+	url = https://github.com/KirillShakhov/HPS.Lab1.git
