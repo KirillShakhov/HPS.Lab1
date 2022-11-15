@@ -1,5 +1,5 @@
 [submodule "Attachment"]
-	path = Attachment/
+	path = Attachment
 	url = https://github.com/KirillShakhov/HPS.Lab1.git
 [submodule "Chat"]
 	path = Chat
