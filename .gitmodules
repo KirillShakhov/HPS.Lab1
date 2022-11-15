@@ -10,3 +10,6 @@
 [submodule "Payment"]
 	path = Payment
 	url = https://github.com/KirillShakhov/HPS.Lab1.git
+[submodule "Authorization"]
+	path = Authorization
+	url = https://github.com/KirillShakhov/HPS.Lab1.git
