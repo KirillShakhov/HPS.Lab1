@@ -1,0 +1,38 @@
+#  docker-compose up -d --no-deps --build
+version: "2.1"
+
+networks:
+  test:
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "18080:8080"
+    environment:
+      spring.datasource.url: "jdbc:postgresql://db:5432/postgres"
+
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - test
+
+  db:
+    image: postgres
+    container_name: db
+    ports:
+      - "5001:5432"
+    environment:
+      - POSTGRES_PASSWORD=itmoitmo
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - test
