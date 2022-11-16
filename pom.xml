@@ -8,12 +8,12 @@
 		<version>2.7.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ru.itmo.hps.lab1</groupId>
-	<artifactId>Payment</artifactId>
+	<groupId>ru.itmo.hls</groupId>
+	<artifactId>payment-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Payment</name>
-	<description>Payment</description>
+	<name>payment-service</name>
+	<description>payment-service</description>
 	<properties>
 		<java.version>19</java.version>
 	</properties>
