@@ -8,12 +8,12 @@
         <version>2.7.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>ru.itmo.hps.lab1</groupId>
-    <artifactId>Chat</artifactId>
+    <groupId>ru.itmo.hls</groupId>
+    <artifactId>chat-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Chat</name>
-    <description>Chat</description>
+    <name>chat-service</name>
+    <description>chat-service</description>
     <properties>
         <java.version>19</java.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
