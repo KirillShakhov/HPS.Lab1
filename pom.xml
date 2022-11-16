@@ -8,13 +8,16 @@
 		<version>2.7.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>ru.itmo.hps.lab1</groupId>
-	<artifactId>Core</artifactId>
+	<groupId>ru.itmo.hls</groupId>
+	<artifactId>core-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Core</name>
-	<description>Core</description>
+	<name>core-service</name>
+	<description>core-service</description>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<java.version>17</java.version>
 		<spring-cloud.version>2021.0.5</spring-cloud.version>
 	</properties>
@@ -89,6 +92,10 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		<!--<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>-->
 	</dependencies>
 
 	<dependencyManagement>
@@ -110,5 +117,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
