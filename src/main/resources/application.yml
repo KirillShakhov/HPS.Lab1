@@ -1,9 +1,8 @@
-eureka:
-  client:
-    fetch-registry: 'false'
-    register-with-eureka: 'false'
 spring:
   application:
-    name: eureka-server
-server:
-  port: '8761'
+    name: eureka-discovery
+  cloud:
+    config:
+      fail-fast: true
+  config:
+    import: "optional:configserver:http://localhost:8888"
