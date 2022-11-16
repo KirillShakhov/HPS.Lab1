@@ -1,0 +1,22 @@
+package ru.itmo.hps.lab1.payment.repository;
+
+import org.springframework.jdbc.core.RowMapper;
+import ru.itmo.hps.lab1.payment.entity.Payment;
+
+import java.sql.ResultSet;
+import java.util.List;
+
+public interface PaymentRepository {
+    // Маппер, превращающий строку из таблицы БД в объект класса Person
+    RowMapper<Payment> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> {
+        return new Payment(resultSet.getLong("id"), resultSet.getString("token"), resultSet.getString("createDate"), resultSet.getString("description"));
+    };
+
+    List<Payment> findAll();
+
+    Payment getById(Long id);
+
+    Payment save(Payment person);
+
+    int removeById(Long id);
+}
