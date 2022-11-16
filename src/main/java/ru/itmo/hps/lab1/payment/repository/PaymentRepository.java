@@ -16,7 +16,8 @@ public interface PaymentRepository {
 
     Payment getById(Long id);
 
-    Payment save(Payment person);
+    int save(Payment person);
 
     int removeById(Long id);
+    int deleteAll();
 }

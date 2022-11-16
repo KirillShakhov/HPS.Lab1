@@ -20,13 +20,13 @@ public class SpringJdbcConfig {
                 .addScript("classpath:jdbc/test-data.sql").build();
     }
 
-//    @Bean
-//    public DataSource mysqlDataSource() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-//        dataSource.setUrl("jdbc:mysql://localhost:3306/springjdbc");
-//        dataSource.setUsername("guest_user");
-//        dataSource.setPassword("guest_password");
-//        return dataSource;
-//    }
+    @Bean
+    public DataSource postgresqlDataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.postgresql.jdbc.Driver");
+        dataSource.setUrl("jdbc:postgresql://localhost:3306/springjdbc");
+        dataSource.setUsername("guest_user");
+        dataSource.setPassword("guest_password");
+        return dataSource;
+    }
 }

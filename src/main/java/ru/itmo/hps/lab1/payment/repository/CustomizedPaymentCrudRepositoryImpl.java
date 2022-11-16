@@ -1,7 +1,8 @@
 package ru.itmo.hps.lab1.payment.repository;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.itmo.hps.lab1.payment.entity.Payment;
@@ -24,17 +25,28 @@ public class CustomizedPaymentCrudRepositoryImpl implements PaymentRepository {
     }
 
 
-    public Payment save(Payment payment) {
-        return null;
+    public int save(Payment payment) {
+        return jdbcTemplate.update("INSERT INTO payments (id, token, description, createDate) VALUES(?,?,?,?)",
+                new Object[] { payment.getId(), payment.getToken(), payment.getDescription(), payment.getCreateDate() });
     }
 
     public int removeById(Long id) {
-
-        return 0;
+        return jdbcTemplate.update("DELETE FROM payments WHERE id=?", id);
     }
 
-    public Payment getById(Long id) {
 
-        return null;
+    public Payment getById(Long id) {
+        try {
+            Payment Payment = jdbcTemplate.queryForObject("SELECT * FROM payments WHERE id=?",
+                    BeanPropertyRowMapper.newInstance(Payment.class), id);
+
+            return Payment;
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
+        }
+    }
+
+    public int deleteAll() {
+        return jdbcTemplate.update("DELETE from payments");
     }
 }
