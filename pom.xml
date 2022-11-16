@@ -8,12 +8,12 @@
         <version>2.7.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>ru.itmo.hps.lab1</groupId>
-    <artifactId>Attachment</artifactId>
+    <groupId>ru.itmo.hls</groupId>
+    <artifactId>attachment-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>Attachment</name>
-    <description>Attachment</description>
+    <name>attachment-service</name>
+    <description>attachment-service</description>
     <properties>
         <java.version>19</java.version>
     </properties>
