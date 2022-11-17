@@ -1,6 +1,12 @@
 spring:
   application:
     name: chat-service
+  r2dbc:
+    url: r2dbc:postgresql://localhost:49153/postgres
+    username: postgres
+    password: postgrespw
+    properties:
+      schema: public
 server:
   port: '8081'
 eureka:
