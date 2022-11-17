@@ -8,6 +8,8 @@ import ru.itmo.hps.lab1.payment.entity.Payment;
 import ru.itmo.hps.lab1.payment.repository.PaymentRepository;
 import ru.itmo.hps.lab1.payment.services.PaymentService;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class PaymentController {
@@ -15,17 +17,13 @@ public class PaymentController {
 
     @PostMapping("/payments")
     public ResponseEntity<String> createpayment(@RequestBody Payment payment) {
-        try {
-            PaymentRepository.save(new Payment(payment.getId(), payment.getToken(), payment.getDescription(), payment.getCreateDate()));
-            return new ResponseEntity<>("Payment was created successfully.", HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        paymentService.save(payment);
+        return new ResponseEntity<>("Payment was created successfully.", HttpStatus.CREATED);
     }
 
     @GetMapping("/payments/{id}")
     public ResponseEntity<Payment> getTutorialById(@PathVariable("id") long id) {
-        Payment payment = PaymentRepository.getById(id);
+        Payment payment = paymentService.getById(id);
 
         if (payment != null) {
             return new ResponseEntity<>(payment, HttpStatus.OK);
@@ -34,9 +32,14 @@ public class PaymentController {
         }
     }
 
+    @GetMapping("/payments")
+    public ResponseEntity<List<Payment>> getAllPayment() {
+        return new ResponseEntity<>(paymentService.findAll(), HttpStatus.OK);
+    }
+
     @PutMapping("/payments/{id}")
     public ResponseEntity<String> updatePayment(@PathVariable("id") long id, @RequestBody Payment payment) {
-        Payment _payment = PaymentRepository.getById(id);
+        Payment _payment = paymentService.getById(id);
 
         if (_payment != null) {
             _payment.setId(id);
@@ -44,7 +47,7 @@ public class PaymentController {
             _payment.setDescription(payment.getDescription());
             _payment.setCreateDate(payment.getCreateDate());
 
-            PaymentRepository.update(_payment);
+            paymentService.update(_payment);
             return new ResponseEntity<>("Payment was updated successfully.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Cannot find Payment with id=" + id, HttpStatus.NOT_FOUND);
