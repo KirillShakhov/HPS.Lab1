@@ -30,6 +30,12 @@ public class CustomizedPaymentCrudRepositoryImpl implements PaymentRepository {
                 new Object[] { payment.getId(), payment.getToken(), payment.getDescription(), payment.getCreateDate() });
     }
 
+    @Override
+    public int update(Payment payment) {
+        return jdbcTemplate.update("UPDATE tutorials SET token=?, description=?, createDate=? WHERE id=?",
+                new Object[] { payment.getToken(), payment.getDescription(), payment.getCreateDate(), payment.getId() });
+    }
+
     public int removeById(Long id) {
         return jdbcTemplate.update("DELETE FROM payments WHERE id=?", id);
     }

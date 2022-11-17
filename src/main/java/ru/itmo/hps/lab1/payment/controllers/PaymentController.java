@@ -3,9 +3,7 @@ package ru.itmo.hps.lab1.payment.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.itmo.hps.lab1.payment.entity.Payment;
 import ru.itmo.hps.lab1.payment.repository.PaymentRepository;
 import ru.itmo.hps.lab1.payment.services.PaymentService;
@@ -15,15 +13,44 @@ import ru.itmo.hps.lab1.payment.services.PaymentService;
 public class PaymentController {
     private final PaymentService paymentService;
 
-//    @PostMapping("/payments")
-//    public ResponseEntity<String> createpayment(@RequestBody Payment payment) {
-//        try {
-//            PaymentRepository.save(new Payment(payment.getId(), payment.getToken(), payment.getDescription(), payment.getCreateDate()));
-//            return new ResponseEntity<>("Payment was created successfully.", HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @PostMapping("/payments")
+    public ResponseEntity<String> createpayment(@RequestBody Payment payment) {
+        try {
+            PaymentRepository.save(new Payment(payment.getId(), payment.getToken(), payment.getDescription(), payment.getCreateDate()));
+            return new ResponseEntity<>("Payment was created successfully.", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/payments/{id}")
+    public ResponseEntity<Payment> getTutorialById(@PathVariable("id") long id) {
+        Payment payment = PaymentRepository.getById(id);
+
+        if (payment != null) {
+            return new ResponseEntity<>(payment, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/payments/{id}")
+    public ResponseEntity<String> updatePayment(@PathVariable("id") long id, @RequestBody Payment payment) {
+        Payment _payment = PaymentRepository.getById(id);
+
+        if (_payment != null) {
+            _payment.setId(id);
+            _payment.setToken(payment.getToken());
+            _payment.setDescription(payment.getDescription());
+            _payment.setCreateDate(payment.getCreateDate());
+
+            PaymentRepository.update(_payment);
+            return new ResponseEntity<>("Payment was updated successfully.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Cannot find Payment with id=" + id, HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 //    @PostMapping("/signin")
 //    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws Exception {
@@ -31,131 +58,3 @@ public class PaymentController {
 //        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
 //    }
 }
-
-//package com.bezkoder.spring.jdbc.postgresql.controller;
-//
-//        import java.util.ArrayList;
-//        import java.util.List;
-//
-//        import org.springframework.beans.factory.annotation.Autowired;
-//        import org.springframework.http.HttpStatus;
-//        import org.springframework.http.ResponseEntity;
-//        import org.springframework.web.bind.annotation.CrossOrigin;
-//        import org.springframework.web.bind.annotation.DeleteMapping;
-//        import org.springframework.web.bind.annotation.GetMapping;
-//        import org.springframework.web.bind.annotation.PathVariable;
-//        import org.springframework.web.bind.annotation.PostMapping;
-//        import org.springframework.web.bind.annotation.PutMapping;
-//        import org.springframework.web.bind.annotation.RequestBody;
-//        import org.springframework.web.bind.annotation.RequestMapping;
-//        import org.springframework.web.bind.annotation.RequestParam;
-//        import org.springframework.web.bind.annotation.RestController;
-//
-//        import com.bezkoder.spring.jdbc.postgresql.model.Tutorial;
-//        import com.bezkoder.spring.jdbc.postgresql.repository.TutorialRepository;
-//
-//@CrossOrigin(origins = "http://localhost:8081")
-//@RestController
-//@RequestMapping("/api")
-//public class TutorialController {
-//
-//    @Autowired
-//    TutorialRepository tutorialRepository;
-//
-//    @GetMapping("/tutorials")
-//    public ResponseEntity<List<Tutorial>> getAllTutorials(@RequestParam(required = false) String title) {
-//        try {
-//            List<Tutorial> tutorials = new ArrayList<Tutorial>();
-//
-//            if (title == null)
-//                tutorialRepository.findAll().forEach(tutorials::add);
-//            else
-//                tutorialRepository.findByTitleContaining(title).forEach(tutorials::add);
-//
-//            if (tutorials.isEmpty()) {
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//
-//            return new ResponseEntity<>(tutorials, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//
-//    @GetMapping("/tutorials/{id}")
-//    public ResponseEntity<Tutorial> getTutorialById(@PathVariable("id") long id) {
-//        Tutorial tutorial = tutorialRepository.findById(id);
-//
-//        if (tutorial != null) {
-//            return new ResponseEntity<>(tutorial, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
-//
-//    @PostMapping("/tutorials")
-//    public ResponseEntity<String> createTutorial(@RequestBody Tutorial tutorial) {
-//        try {
-//            tutorialRepository.save(new Tutorial(tutorial.getTitle(), tutorial.getDescription(), false));
-//            return new ResponseEntity<>("Tutorial was created successfully.", HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//
-//    @PutMapping("/tutorials/{id}")
-//    public ResponseEntity<String> updateTutorial(@PathVariable("id") long id, @RequestBody Tutorial tutorial) {
-//        Tutorial _tutorial = tutorialRepository.findById(id);
-//
-//        if (_tutorial != null) {
-//            _tutorial.setId(id);
-//            _tutorial.setTitle(tutorial.getTitle());
-//            _tutorial.setDescription(tutorial.getDescription());
-//            _tutorial.setPublished(tutorial.isPublished());
-//
-//            tutorialRepository.update(_tutorial);
-//            return new ResponseEntity<>("Tutorial was updated successfully.", HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>("Cannot find Tutorial with id=" + id, HttpStatus.NOT_FOUND);
-//        }
-//    }
-//
-//    @DeleteMapping("/tutorials/{id}")
-//    public ResponseEntity<String> deleteTutorial(@PathVariable("id") long id) {
-//        try {
-//            int result = tutorialRepository.deleteById(id);
-//            if (result == 0) {
-//                return new ResponseEntity<>("Cannot find Tutorial with id=" + id, HttpStatus.OK);
-//            }
-//            return new ResponseEntity<>("Tutorial was deleted successfully.", HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>("Cannot delete tutorial.", HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//
-//    @DeleteMapping("/tutorials")
-//    public ResponseEntity<String> deleteAllTutorials() {
-//        try {
-//            int numRows = tutorialRepository.deleteAll();
-//            return new ResponseEntity<>("Deleted " + numRows + " Tutorial(s) successfully.", HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>("Cannot delete tutorials.", HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//
-//    }
-//
-//    @GetMapping("/tutorials/published")
-//    public ResponseEntity<List<Tutorial>> findByPublished() {
-//        try {
-//            List<Tutorial> tutorials = tutorialRepository.findByPublished(true);
-//
-//            if (tutorials.isEmpty()) {
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//            return new ResponseEntity<>(tutorials, HttpStatus.OK);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//
-//}

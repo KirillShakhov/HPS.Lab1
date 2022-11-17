@@ -18,6 +18,8 @@ public interface PaymentRepository {
 
     int save(Payment person);
 
+    int update(Payment person);
+
     int removeById(Long id);
     int deleteAll();
 }
