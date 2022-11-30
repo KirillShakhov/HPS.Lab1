@@ -1,6 +1,5 @@
 package ru.itmo.hps.lab1.attachment.entity;
 
-
 import lombok.*;
 import javax.persistence.*;
 
